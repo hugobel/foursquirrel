@@ -1,5 +1,76 @@
-body {
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background: #e1e1e1;
+}
+
+#app {
+  height: 100%;
+  text-align: center;
+}
+
+.info-window {
+  position: relative;
+  text-align: left;
+}
+
+.info-title {
+  font: 700 15px/32px sans-serif;
+  display: inline-block;
+  vertical-align: top;
+  margin: 5px 30px 5px 40px;
+}
+
+.info-details {
+  margin: 5px;
+  width: 300px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.button-star {
+  border: none;
+  display: block;
+  width: 24px;
+  height: 32px;
+  mask-image: url(./images/star.svg);
+  cursor: pointer;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+.button-star.remove {
+  background-color: #FF991D;
+}
+
+.button-star.add {
+  background-color: #a9a9a9;
+}
+
+.loader {
+  animation: shake 0.8s cubic-bezier(.36,.07,.19,.97) infinite;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 2px, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 1px, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }

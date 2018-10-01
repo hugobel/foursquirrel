@@ -1,24 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchStores, setStores } from './actions/store';
+import storeLocator from './services/storeLocator';
 
-/*
-* Use this component as a launching-pad to build your functionality.
-*
-*/
+import Map from './components/Map';
+import Preloader from './components/Preloader';
+import Splash from './components/Splash';
+
+import directory from './store_directory.json';
+
 class YourComponent extends Component {
+  componentDidMount() {
+    const { stores, setStores, fetchStores } = this.props;
+
+    if (!stores.length){
+      storeLocator(directory, fetchStores)
+        .then(setStores);
+    }
+  }
+
   render() {
-    return (
-      <div style={divStyle}>
-        <h1> Put your solution here!</h1>
-      </div>
-    );
+    const { stores, isLoading } = this.props;
+
+    if (isLoading) return <Preloader />;
+
+    if (stores.length > 0) return <Map markers={stores} />;
+
+    return <Splash />;
   }
 }
 
-var divStyle = {
-  border: 'red',
-  borderWidth: 2,
-  borderStyle: 'solid',
-  padding: 20
-};
+const mapStateToProps = state => ({
+  isLoading: state.app.isLoading,
+  stores: state.stores
+});
 
-export default YourComponent;
+const mapDispatchToProps = dispatch => ({
+  fetchStores: payload => dispatch(fetchStores(payload)),
+  setStores: payload => dispatch(setStores(payload))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(YourComponent);
